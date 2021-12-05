@@ -98,16 +98,20 @@ class ContextMenuHost {
         adapter.submitList(items) {
             val interpolator = DecelerateInterpolator(1.2f)
             view.apply { layoutParams = layoutParams.apply { width = targetSize } }
-            TransitionManager.beginDelayedTransition(view, TransitionSet()
-                .setOrdering(TransitionSet.ORDERING_TOGETHER)
-                .addTransition(Fade(Fade.OUT))
-                .addTransition(ChangeBounds()
-                    .setDuration(duration.toMillis())
-                    .setInterpolator(interpolator)
-                )
-                .addTransition(Fade(Fade.IN)
-                    .setDuration(Duration.ofMillis(500).toMillis())
-                )
+            TransitionManager.beginDelayedTransition(
+                view,
+                TransitionSet()
+                    .setOrdering(TransitionSet.ORDERING_TOGETHER)
+                    .addTransition(Fade(Fade.OUT))
+                    .addTransition(
+                        ChangeBounds()
+                            .setDuration(duration.toMillis())
+                            .setInterpolator(interpolator)
+                    )
+                    .addTransition(
+                        Fade(Fade.IN)
+                            .setDuration(Duration.ofMillis(500).toMillis())
+                    )
             )
         }
     }

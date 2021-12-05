@@ -46,15 +46,17 @@ fun DpadButton(
     view: ComposeView,
     content: @Composable () -> Unit,
 ) {
-    val scale by animateFloatAsState(if (state.hasFocus.value) {
-        if (state.isPressed.value) {
-            1.1f
+    val scale by animateFloatAsState(
+        if (state.hasFocus.value) {
+            if (state.isPressed.value) {
+                1.1f
+            } else {
+                1.2f
+            }
         } else {
-            1.2f
+            1f
         }
-    } else {
-        1f
-    })
+    )
 
     view.scaleX = scale
     view.scaleY = scale
@@ -99,7 +101,8 @@ fun PreviewDpadButton() {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(40.dp),
-            view = view, onClick = {}) {
+            view = view, onClick = {}
+        ) {
             Box {
                 Text(modifier = Modifier.align(Alignment.Center), text = "ButtonContent")
             }

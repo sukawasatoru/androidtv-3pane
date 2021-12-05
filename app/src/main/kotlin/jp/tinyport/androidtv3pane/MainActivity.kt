@@ -83,13 +83,15 @@ class MainActivity : ComponentActivity() {
             nextEndId = View.NO_ID,
         )
 
-        lifecycle.addObserver(FocusAreaObserver(
-            binding = binding,
-            onChange = { focusArea ->
-                log.debug("[TvMainActivity] onFocusArea: %s", focusArea)
-                lastFocus = focusArea
-                contextMenuHost.updateFocusArea(focusArea)
-            }
-        ))
+        lifecycle.addObserver(
+            FocusAreaObserver(
+                binding = binding,
+                onChange = { focusArea ->
+                    log.debug("[TvMainActivity] onFocusArea: %s", focusArea)
+                    lastFocus = focusArea
+                    contextMenuHost.updateFocusArea(focusArea)
+                }
+            )
+        )
     }
 }

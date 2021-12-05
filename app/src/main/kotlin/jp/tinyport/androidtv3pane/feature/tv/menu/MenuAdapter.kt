@@ -31,11 +31,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.recyclerview.widget.DiffUtil
+import jp.tinyport.androidtv3pane.feature.tv.DpadHighlightButton
+import jp.tinyport.androidtv3pane.feature.tv.rememberDpadSurfaceState
 import jp.tinyport.androidtv3pane.function.AppTheme
 import jp.tinyport.androidtv3pane.function.ComposeViewAdapter
 import jp.tinyport.androidtv3pane.function.isRTL
-import jp.tinyport.androidtv3pane.feature.tv.DpadHighlightButton
-import jp.tinyport.androidtv3pane.feature.tv.rememberDpadSurfaceState
 
 class MenuAdapter(
     @IdRes val nextStartId: Int,

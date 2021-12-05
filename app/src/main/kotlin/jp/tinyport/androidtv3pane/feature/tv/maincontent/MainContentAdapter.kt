@@ -33,8 +33,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.recyclerview.widget.DiffUtil
-import jp.tinyport.androidtv3pane.function.AppTheme
-import jp.tinyport.androidtv3pane.function.ComposeViewAdapter
 import jp.tinyport.androidtv3pane.feature.tv.CollapsedType
 import jp.tinyport.androidtv3pane.feature.tv.ContextMenuItem
 import jp.tinyport.androidtv3pane.feature.tv.ContextMenuItems
@@ -42,6 +40,8 @@ import jp.tinyport.androidtv3pane.feature.tv.ContextMenuListener
 import jp.tinyport.androidtv3pane.feature.tv.DpadButton
 import jp.tinyport.androidtv3pane.feature.tv.ExpandType
 import jp.tinyport.androidtv3pane.feature.tv.rememberDpadSurfaceState
+import jp.tinyport.androidtv3pane.function.AppTheme
+import jp.tinyport.androidtv3pane.function.ComposeViewAdapter
 
 class MainContentAdapter(
     override var onContextMenu: ((ContextMenuItems) -> Unit)? = null,
@@ -84,14 +84,14 @@ class MainContentAdapter(
                         with(density) {
                             onContextMenu?.invoke(
                                 ContextMenuItems(
-                                items = listOf(
-                                    ContextMenuItem("context item 1"),
-                                    ContextMenuItem("context item 2"),
-                                    ContextMenuItem("context item 3"),
-                                ),
-                                collapsedType = CollapsedType.MoreVert,
-                                expandedSize = ExpandType.Medium,
-                            )
+                                    items = listOf(
+                                        ContextMenuItem("context item 1"),
+                                        ContextMenuItem("context item 2"),
+                                        ContextMenuItem("context item 3"),
+                                    ),
+                                    collapsedType = CollapsedType.MoreVert,
+                                    expandedSize = ExpandType.Medium,
+                                )
                             )
                         }
                     }

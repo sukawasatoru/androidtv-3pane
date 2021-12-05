@@ -37,7 +37,8 @@ fun rememberSystemInsets(): State<SystemInsets?> {
             paddings.value = SystemInsets(
                 systemBar = InsetsPaddingValues.create(density, insets.getInsets(WindowInsetsCompat.Type.systemBars())),
                 gesture = InsetsPaddingValues.create(
-                    density, insets.getInsets(WindowInsetsCompat.Type.systemGestures())),
+                    density, insets.getInsets(WindowInsetsCompat.Type.systemGestures())
+                ),
             )
 
             log.debug("[rememberSystemInsets] newValue: %s", paddings.value)

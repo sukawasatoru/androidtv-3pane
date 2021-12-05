@@ -1,0 +1,52 @@
+plugins {
+    id 'com.android.application'
+    id 'com.diffplug.spotless'
+    id 'kotlin-android'
+}
+
+android {
+    defaultConfig {
+        applicationId 'jp.tinyport.androidtv3pane'
+        versionCode 1
+        versionName '0.1.0'
+        signingConfig signingConfigs.debug
+    }
+
+    buildFeatures {
+        compose true
+        viewBinding true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.1.0-beta02'
+    }
+
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/*.kotlin_module'
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("$rootDir/debug.p12")
+        }
+    }
+}
+
+dependencies {
+    implementation libs.androidx.activityCompose
+    implementation libs.androidx.composeUiTooling
+    implementation libs.androidx.composeMaterial
+    implementation libs.androidx.constraint
+    implementation libs.androidx.leanback
+    implementation libs.androidx.lifecycleRuntime
+    implementation libs.androidx.profileInstaller
+    implementation libs.google.material
+    implementation libs.kotlinx.coroutinesAndroid
+    implementation libs.kotlinResult
+    implementation libs.tinyport.logger
+}

@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package jp.tinyport.androidtv3pane.feature.tv
+package jp.tinyport.androidtv3pane.feature.tv.contextmenu
+
+import jp.tinyport.androidtv3pane.feature.tv.ContextMenuItems
 
 interface ContextMenuListener {
     var onContextMenu: ((items: ContextMenuItems) -> Unit)?

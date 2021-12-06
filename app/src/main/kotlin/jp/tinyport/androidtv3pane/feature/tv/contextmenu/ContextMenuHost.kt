@@ -27,7 +27,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.leanback.widget.VerticalGridView
 import java.lang.ref.WeakReference
 import java.time.Duration
-import jp.tinyport.androidtv3pane.feature.tv.ContextMenuAdapter
 import jp.tinyport.androidtv3pane.feature.tv.ContextMenuItem
 import jp.tinyport.androidtv3pane.feature.tv.ContextMenuItems
 import jp.tinyport.androidtv3pane.feature.tv.FocusArea

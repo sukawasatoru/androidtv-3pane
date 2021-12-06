@@ -18,14 +18,16 @@ package jp.tinyport.androidtv3pane.feature.tv.menu
 
 import androidx.annotation.IdRes
 import androidx.leanback.widget.VerticalGridView
+import jp.tinyport.androidtv3pane.feature.tv.plugin.Plugin
 
 class MenuHost {
     fun init(
         view: VerticalGridView,
         @IdRes nextStartId: Int,
         @IdRes nextEndId: Int,
-        onClick: (menu: TopMenu) -> Unit,
-        onFocus: (menu: TopMenu) -> Unit,
+        onClick: (menu: Plugin) -> Unit,
+        onFocus: (menu: Plugin) -> Unit,
+        plugins: List<Plugin>,
     ) {
         view.adapter = MenuAdapter(
             nextStartId = nextStartId,
@@ -33,7 +35,7 @@ class MenuHost {
         ).apply {
             this.onClick = onClick
             this.onFocus = onFocus
-            submitList(TopMenu.values().toList())
+            submitList(plugins)
         }
     }
 }

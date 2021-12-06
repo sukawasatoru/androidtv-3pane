@@ -1,6 +1,7 @@
 package jp.tinyport.androidtv3pane.core
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 import java.io.OutputStream
 import java.io.PrintStream
 import jp.tinyport.androidtv3pane.BuildConfig
@@ -9,6 +10,7 @@ import jp.tinyport.logger.Logger
 
 val log = Logger()
 
+@HiltAndroidApp
 class App : Application() {
     override fun onCreate() {
         super.onCreate()

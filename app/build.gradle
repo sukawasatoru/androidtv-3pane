@@ -1,7 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'com.diffplug.spotless'
+    id 'dagger.hilt.android.plugin'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -45,8 +47,10 @@ dependencies {
     implementation libs.androidx.leanback
     implementation libs.androidx.lifecycleRuntime
     implementation libs.androidx.profileInstaller
+    implementation libs.google.hilt
     implementation libs.google.material
     implementation libs.kotlinx.coroutinesAndroid
     implementation libs.kotlinResult
     implementation libs.tinyport.logger
+    kapt libs.google.hiltCompiler
 }

@@ -6,6 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.addCallback
 import androidx.compose.material.contentColorFor
 import androidx.compose.ui.graphics.toArgb
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import jp.tinyport.androidtv3pane.core.log
 import jp.tinyport.androidtv3pane.databinding.TvMainBinding
 import jp.tinyport.androidtv3pane.feature.tv.FocusArea
@@ -13,10 +15,15 @@ import jp.tinyport.androidtv3pane.feature.tv.FocusAreaObserver
 import jp.tinyport.androidtv3pane.feature.tv.contextmenu.ContextMenuHost
 import jp.tinyport.androidtv3pane.feature.tv.maincontent.MainContentHost
 import jp.tinyport.androidtv3pane.feature.tv.menu.MenuHost
+import jp.tinyport.androidtv3pane.feature.tv.plugin.PluginHost
 import jp.tinyport.androidtv3pane.function.appColors
 import jp.tinyport.androidtv3pane.function.isNightMode
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var pluginHost: PluginHost
+
     override fun onCreate(savedInstanceState: Bundle?) {
         log.debug("[TvMainActivity] onCreate")
 
@@ -46,6 +53,8 @@ class MainActivity : ComponentActivity() {
         val backgroundColor = appColors.background
         binding.background.setBackgroundColor(backgroundColor.toArgb())
 
+        lifecycle.addObserver(pluginHost)
+
         val menuHost = MenuHost()
         val mainContentHost = MainContentHost()
         val contextMenuHost = ContextMenuHost()
@@ -62,12 +71,14 @@ class MainActivity : ComponentActivity() {
             onFocus = { menu ->
                 log.debug("[TvMainActivity] onMenuFocused: %s", menu)
 
-                mainContentHost.updateItems(menu.getItems())
+                mainContentHost.setContentsFlow(menu.getContentsFlow())
             },
+            plugins = pluginHost.plugins
         )
 
         mainContentHost.init(
             view = binding.body,
+            lifecycleOwner = this,
             onContextMenu = { items ->
                 log.debug("[TvMainActivity] onContextMenu: %s", items)
 

@@ -17,23 +17,45 @@
 package jp.tinyport.androidtv3pane.feature.tv.maincontent
 
 import androidx.leanback.widget.VerticalGridView
+import androidx.lifecycle.LifecycleOwner
+import java.lang.ref.WeakReference
 import jp.tinyport.androidtv3pane.feature.tv.ContextMenuItems
+import jp.tinyport.androidtv3pane.function.launchRepeatOnStarted
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 
 class MainContentHost {
     private lateinit var mainContentAdapter: MainContentAdapter
 
+    private var lifecycleOwner = WeakReference<LifecycleOwner>(null)
+
+    private var job: Job? = null
+
     fun init(
         view: VerticalGridView,
+        lifecycleOwner: LifecycleOwner,
         onContextMenu: (contextMenu: ContextMenuItems) -> Unit,
     ) {
         view.itemAnimator = null
+
+        this.lifecycleOwner = WeakReference(lifecycleOwner)
+
         mainContentAdapter = MainContentAdapter().apply {
             this.onContextMenu = onContextMenu
         }
         view.adapter = mainContentAdapter
     }
 
-    fun updateItems(items: List<String>) {
-        mainContentAdapter.submitList(items)
+    fun setContentsFlow(contentsFlow: Flow<List<String>>) {
+        job?.cancel()
+
+        val owner = lifecycleOwner.get() ?: return
+
+        job = owner.launchRepeatOnStarted {
+            contentsFlow.collect {
+                mainContentAdapter.submitList(it)
+            }
+        }
     }
 }

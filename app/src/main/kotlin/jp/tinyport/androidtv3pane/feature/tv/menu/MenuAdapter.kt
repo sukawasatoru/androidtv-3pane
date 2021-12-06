@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.recyclerview.widget.DiffUtil
 import jp.tinyport.androidtv3pane.feature.tv.DpadHighlightButton
+import jp.tinyport.androidtv3pane.feature.tv.plugin.Plugin
 import jp.tinyport.androidtv3pane.feature.tv.rememberDpadSurfaceState
 import jp.tinyport.androidtv3pane.function.AppTheme
 import jp.tinyport.androidtv3pane.function.ComposeViewAdapter
@@ -40,21 +41,21 @@ import jp.tinyport.androidtv3pane.function.isRTL
 class MenuAdapter(
     @IdRes val nextStartId: Int,
     @IdRes val nextEndId: Int,
-) : ComposeViewAdapter<TopMenu, ComposeViewAdapter.Holder>(CB) {
+) : ComposeViewAdapter<Plugin, ComposeViewAdapter.Holder>(CB) {
     companion object {
-        val CB = object : DiffUtil.ItemCallback<TopMenu>() {
-            override fun areItemsTheSame(oldItem: TopMenu, newItem: TopMenu): Boolean {
-                return oldItem == newItem
+        val CB = object : DiffUtil.ItemCallback<Plugin>() {
+            override fun areItemsTheSame(oldItem: Plugin, newItem: Plugin): Boolean {
+                return oldItem.getId() == newItem.getId()
             }
 
-            override fun areContentsTheSame(oldItem: TopMenu, newItem: TopMenu): Boolean {
-                return oldItem == newItem
+            override fun areContentsTheSame(oldItem: Plugin, newItem: Plugin): Boolean {
+                return oldItem.getId() == newItem.getId() && oldItem.menuTitle() == newItem.menuTitle()
             }
         }
     }
 
-    var onClick: ((item: TopMenu) -> Unit)? = null
-    var onFocus: ((item: TopMenu) -> Unit)? = null
+    var onClick: ((item: Plugin) -> Unit)? = null
+    var onFocus: ((item: Plugin) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder.create(parent.context).also {
@@ -101,7 +102,7 @@ class MenuAdapter(
                         Text(
                             modifier = Modifier.align(Alignment.Center),
                             color = color,
-                            text = "$item, pressed: ${menuState.isPressed.value}",
+                            text = "${item.menuTitle()}, pressed: ${menuState.isPressed.value}",
                         )
                     }
                 }

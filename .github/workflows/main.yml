@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v2
       - name: Build
@@ -19,7 +20,7 @@ jobs:
           ./gradlew --info --stacktrace build
   spotless:
     runs-on: ubuntu-latest
-    container: ghcr.io/sukawasatoru/toolchain-android:1.1
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v2
       - name: Build

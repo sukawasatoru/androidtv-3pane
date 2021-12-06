@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build
         env:
-          GRADLE_OPTS: -Xmx4g
+          GRADLE_OPTS: -Dorg.gradle.jvmargs=-Xmx4g
           USERNAME: ${{ github.actor }}
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |

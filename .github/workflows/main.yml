@@ -8,12 +8,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ghcr.io/sukawasatoru/toolchain-android:1.1
     steps:
       - uses: actions/checkout@v2
       - name: Build
         env:
-          GRADLE_OPTS: -Xmx4g
+          GRADLE_OPTS: -Xmx6g
           USERNAME: ${{ github.actor }}
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |

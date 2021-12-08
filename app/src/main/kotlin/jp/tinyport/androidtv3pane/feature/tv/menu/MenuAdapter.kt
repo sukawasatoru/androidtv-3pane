@@ -75,12 +75,16 @@ class MenuAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
+    override fun onBindViewHolder(holder: Holder, position: Int, payloads: MutableList<Any>) {
         val item = getItem(position)
         val onClicked = { onClick?.invoke(item) ?: Unit }
+        val payload = payloads.firstOrNull() as MenuAdapterPayload?
         holder.view.setContent {
             AppTheme {
                 val menuState = rememberDpadSurfaceState()
+                if (payload != null && payload.isSelect) {
+                    menuState.hasFocus.value = true
+                }
                 DpadHighlightButton(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -117,4 +121,12 @@ class MenuAdapter(
             }
         }
     }
+
+    override fun onBindViewHolder(holder: Holder, position: Int) {
+        // do nothing.
+    }
 }
+
+data class MenuAdapterPayload(
+    val isSelect: Boolean,
+)

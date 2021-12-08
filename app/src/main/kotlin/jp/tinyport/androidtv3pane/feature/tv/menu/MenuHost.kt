@@ -19,8 +19,11 @@ package jp.tinyport.androidtv3pane.feature.tv.menu
 import androidx.annotation.IdRes
 import androidx.leanback.widget.VerticalGridView
 import jp.tinyport.androidtv3pane.feature.tv.plugin.Plugin
+import jp.tinyport.androidtv3pane.function.ComposeViewAdapter
 
 class MenuHost {
+    private lateinit var adapter: MenuAdapter
+
     fun init(
         view: VerticalGridView,
         @IdRes nextStartId: Int,
@@ -29,13 +32,33 @@ class MenuHost {
         onFocus: (menu: Plugin) -> Unit,
         plugins: List<Plugin>,
     ) {
-        view.adapter = MenuAdapter(
+        adapter = MenuAdapter(
             nextStartId = nextStartId,
             nextEndId = nextEndId,
         ).apply {
             this.onClick = onClick
             this.onFocus = onFocus
             submitList(plugins)
+        }
+
+        view.adapter = adapter
+
+        view.viewTreeObserver.addOnGlobalFocusChangeListener { oldFocus, _ ->
+            if (!view.hasFocus() && view == oldFocus?.parent) {
+                // update immediately for avoiding flicking.
+                adapter.onBindViewHolder(
+                    view.findViewHolderForAdapterPosition(view.selectedPosition) as ComposeViewAdapter.Holder,
+                    view.selectedPosition,
+                    mutableListOf(MenuAdapterPayload(true))
+                )
+            }
+        }
+    }
+
+    fun setHighlight(plugin: Plugin) {
+        val position = adapter.currentList.indexOf(plugin)
+        if (position != -1) {
+            adapter.notifyItemChanged(position, MenuAdapterPayload(true))
         }
     }
 }
